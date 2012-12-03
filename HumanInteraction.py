@@ -100,10 +100,37 @@ class Relationship(object):
 			rtype = "Fatuous Love"
 		elif self.intimacy >= INTIMACY_THRESHOLD and self.passion >= PASSION_THRESHOLD and self.commitment >= COMMITMENT_THRESHOLD:
 			rtype = "Consummate Love"
+		elif self.intimacy < 0 and self.passion < 0:
+			rtype = "Hatred"
+		elif self.intimacy < 0 and self.passion > 0:
+			rtype = "Lustful Distrust"
 		else:
 			rtype = "No Standing Relationship"
 
 		return "Relationship between " + self.p1.name + " and " + self.p2.name + ":\n\tType:\t\t" + rtype + "\n\tCommitment:\t" + str(self.commitment) + "\n\tIntimacy: \t" + str(self.intimacy) + "\n\tPassion: \t" + str(self.passion)
+
+	def sPrint(self):
+		rtype = ""
+		INTIMACY_THRESHOLD = 5
+		PASSION_THRESHOLD = 5
+		COMMITMENT_THRESHOLD = 5
+		if self.intimacy >= INTIMACY_THRESHOLD and self.passion <= INTIMACY_THRESHOLD and self.commitment <= INTIMACY_THRESHOLD:
+			rtype = "Friendship"
+		elif self.intimacy <= INTIMACY_THRESHOLD and self.passion >= PASSION_THRESHOLD and self.commitment <= INTIMACY_THRESHOLD:
+			rtype = "Infatuated Love"
+		elif self.intimacy <= INTIMACY_THRESHOLD and self.passion <= INTIMACY_THRESHOLD and self.commitment >= COMMITMENT_THRESHOLD:
+			rtype = "Empty Love"
+		elif self.intimacy >= INTIMACY_THRESHOLD and self.passion >= PASSION_THRESHOLD and self.commitment <= INTIMACY_THRESHOLD:
+			rtype = "Romantic Love"
+		elif self.intimacy >= INTIMACY_THRESHOLD and self.passion <= INTIMACY_THRESHOLD and self.commitment >= COMMITMENT_THRESHOLD:
+			rtype = "Companionate Love"
+		elif self.intimacy >= INTIMACY_THRESHOLD and self.passion >= PASSION_THRESHOLD and self.commitment >= COMMITMENT_THRESHOLD:
+			rtype = "Fatuous Love"
+		elif self.intimacy >= INTIMACY_THRESHOLD and self.passion >= PASSION_THRESHOLD and self.commitment >= COMMITMENT_THRESHOLD:
+			rtype = "Consummate Love"
+		else:
+			rtype = "No Standing Relationship"
+		return (self.p1.name + " and " + self.p2.name + " " + rtype)
 
 	def progress(self):
 		"""
@@ -127,21 +154,34 @@ def main():
 	people.append(Person("Beth", 0, bool(getrandbits(1)), bool(getrandbits(1)), bool(getrandbits(1)), bool(getrandbits(1))))
 	people.append(Person("Kate", 0, bool(getrandbits(1)), bool(getrandbits(1)), bool(getrandbits(1)), bool(getrandbits(1))))
 	people.append(Person("Ian", 0, bool(getrandbits(1)), bool(getrandbits(1)), bool(getrandbits(1)), bool(getrandbits(1))))
+	people.append(Person("Devin", 0, bool(getrandbits(1)), bool(getrandbits(1)), bool(getrandbits(1)), bool(getrandbits(1))))
+	people.append(Person("Gina", 0, bool(getrandbits(1)), bool(getrandbits(1)), bool(getrandbits(1)), bool(getrandbits(1))))
+	people.append(Person("Krysta", 0, bool(getrandbits(1)), bool(getrandbits(1)), bool(getrandbits(1)), bool(getrandbits(1))))
 
 	connections = list()
-	for i in people:
-		for j in people:
+	for i in range(0, len(people)):
+		for j in range(i, len(people)):
 			if i != j:
-				connections.append(Relationship(i,j))
+				connections.append(Relationship(people[i],people[j]))
 
 	#connections.append(Relationship(Person("Charles", 0, bool(getrandbits(1)), bool(getrandbits(1)), bool(getrandbits(1)), bool(getrandbits(1))), Person("Beth", 0, bool(getrandbits(1)), bool(getrandbits(1)), bool(getrandbits(1)), bool(getrandbits(1)))))
-	for r in range(0,15):
+	for r in range(0,50):
 		for c in connections:
-			print("Mingling...")
-			print(c.p1)
-			print(c.p2)
+			#print("Mingling...")
+			#print(c.p1)
+			#print(c.p2)
 			c.progress()
-			print(c)
+			#print(c)
 			#time.sleep(2)
+	for c in connections:
+			#print("Finals...")
+			#print(c.p1)
+			#print(c.p2)
+			#c.progress()
+			print(c.sPrint())
+			#time.sleep(2)
+	for p in people:
+		print(p)
+
 
 main()
