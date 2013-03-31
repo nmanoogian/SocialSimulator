@@ -7,6 +7,7 @@ class Person(object):
 		mood (int) -50 to 50
 		name (string)
 
+	All boolean types:
 	energy => Natural energy (extraverted to introverted)
 	perception => (sensing to intuitive)
 	judgement => (thinking to feeling)
