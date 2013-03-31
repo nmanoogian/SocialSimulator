@@ -96,7 +96,7 @@ class Relationship(object):
 			rtype = "Romantic Love"
 		elif self.intimacy >= INTIMACY_THRESHOLD and self.passion <= INTIMACY_THRESHOLD and self.commitment >= COMMITMENT_THRESHOLD:
 			rtype = "Companionate Love"
-		elif self.intimacy >= INTIMACY_THRESHOLD and self.passion >= PASSION_THRESHOLD and self.commitment >= COMMITMENT_THRESHOLD:
+		elif self.intimacy >= INTIMACY_THRESHOLD and self.passion >= PASSION_THRESHOLD and self.commitment <= COMMITMENT_THRESHOLD:
 			rtype = "Fatuous Love"
 		elif self.intimacy >= INTIMACY_THRESHOLD and self.passion >= PASSION_THRESHOLD and self.commitment >= COMMITMENT_THRESHOLD:
 			rtype = "Consummate Love"
@@ -124,7 +124,7 @@ class Relationship(object):
 			rtype = "Romantic Love"
 		elif self.intimacy >= INTIMACY_THRESHOLD and self.passion <= INTIMACY_THRESHOLD and self.commitment >= COMMITMENT_THRESHOLD:
 			rtype = "Companionate Love"
-		elif self.intimacy >= INTIMACY_THRESHOLD and self.passion >= PASSION_THRESHOLD and self.commitment >= COMMITMENT_THRESHOLD:
+		elif self.intimacy >= INTIMACY_THRESHOLD and self.passion >= PASSION_THRESHOLD and self.commitment <= COMMITMENT_THRESHOLD:
 			rtype = "Fatuous Love"
 		elif self.intimacy >= INTIMACY_THRESHOLD and self.passion >= PASSION_THRESHOLD and self.commitment >= COMMITMENT_THRESHOLD:
 			rtype = "Consummate Love"
@@ -150,6 +150,7 @@ def main():
 	"""
 	seed()
 	people = list()
+	people.append(Person("Dave", 0, True, False, True, False))
 	people.append(Person("Charles", 0, bool(getrandbits(1)), bool(getrandbits(1)), bool(getrandbits(1)), bool(getrandbits(1))))
 	people.append(Person("Beth", 0, bool(getrandbits(1)), bool(getrandbits(1)), bool(getrandbits(1)), bool(getrandbits(1))))
 	people.append(Person("Kate", 0, bool(getrandbits(1)), bool(getrandbits(1)), bool(getrandbits(1)), bool(getrandbits(1))))
@@ -158,13 +159,19 @@ def main():
 	people.append(Person("Gina", 0, bool(getrandbits(1)), bool(getrandbits(1)), bool(getrandbits(1)), bool(getrandbits(1))))
 	people.append(Person("Krysta", 0, bool(getrandbits(1)), bool(getrandbits(1)), bool(getrandbits(1)), bool(getrandbits(1))))
 
+	"""
+	Create connections for each person
+	Excludes relationship with self
+	"""
 	connections = list()
 	for i in range(0, len(people)):
 		for j in range(i, len(people)):
 			if i != j:
 				connections.append(Relationship(people[i],people[j]))
 
-	#connections.append(Relationship(Person("Charles", 0, bool(getrandbits(1)), bool(getrandbits(1)), bool(getrandbits(1)), bool(getrandbits(1))), Person("Beth", 0, bool(getrandbits(1)), bool(getrandbits(1)), bool(getrandbits(1)), bool(getrandbits(1)))))
+	"""
+	Advances relationships over a set number of iterations
+	"""
 	for r in range(0,50):
 		for c in connections:
 			#print("Mingling...")
@@ -173,12 +180,16 @@ def main():
 			c.progress()
 			#print(c)
 			#time.sleep(2)
+
+	"""
+	Print connections and print people
+	"""
 	for c in connections:
 			#print("Finals...")
 			#print(c.p1)
 			#print(c.p2)
 			#c.progress()
-			print(c.sPrint())
+			print(c)
 			#time.sleep(2)
 	for p in people:
 		print(p)
